@@ -2,15 +2,12 @@ package com.finalYearProject.enterPot.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Generated;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Data
 @EqualsAndHashCode(exclude = "orders")
@@ -67,24 +64,5 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders;
-
-    public Customer(String firstName, String lastName, String email, String password, String gender, Date birthday, String cardNumber, Date cardExpDate,String addressLineOne, String addressLineTwo, String city, String country, int postalCode,Order... orders){
-         this.firstName = firstName;
-         this.lastName = lastName;
-         this.email = email;
-         this.password = password;
-         this.gender = gender;
-         this.birthday = birthday;
-         this.cardNumber = cardNumber;
-         this.cardExpDate = cardExpDate;
-         this.addressLineOne = addressLineOne;
-         this.addressLineTwo = addressLineTwo;
-         this.city = city;
-         this.country = country;
-         this.postalCode = postalCode;
-         this.orders = Stream.of(orders).collect(Collectors.toSet());
-         this.orders.forEach(x-> x.setCustomer(this));
-    }
-
 
 }

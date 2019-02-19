@@ -8,8 +8,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Data
 @EqualsAndHashCode(exclude = "orders")
@@ -37,14 +35,6 @@ public class Item {
     @OneToMany(mappedBy = "item",cascade = CascadeType.ALL)
     private Set<Order> orders;
 
-    public Item(BigDecimal price, String name, String description, String models,Order... orders){
-        this.price = price;
-        this.name = name;
-        this.description = description;
-        this.models = models;
-        this.orders = Stream.of(orders).collect(Collectors.toSet());
-        this.orders.forEach(x-> x.setItem(this));
-    }
 
 
 }

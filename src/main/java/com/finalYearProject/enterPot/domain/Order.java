@@ -52,14 +52,4 @@ public class Order {
     @JoinColumn
     private Item item;
 
-    public Order(int quantity, BigDecimal total, String shippingMode, String status, Date estimatedDeliveryDate, Date orderedDate, Date shippedDate, String location){
-        this.quantity = quantity;
-        this.total = total;
-        this.shippingMode = shippingMode;
-        this.status = status;
-        this.estimatedDeliveryDate = estimatedDeliveryDate;
-        this.orderedDate = orderedDate;
-        this.shippedDate = shippedDate;
-        this.location = location;
-    }
 }
