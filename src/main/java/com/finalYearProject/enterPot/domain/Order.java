@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -12,44 +13,44 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Item_Order")
-public class Order {
+public class Order implements Serializable {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private  Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Size(min=1, max=10)
+    @Size(min = 1, max = 10)
     private int quantity;
 
-    @Column(precision = 10,scale = 2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal total;
 
-    @NotNull @Max(50)
+    @NotNull
+    @Size(min = 1, max = 50)
     private String shippingMode;
 
-    @NotNull @Max(20)
+    @NotNull
+    @Size(min = 1, max = 20)
     private String status;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Future
     private Date estimatedDeliveryDate;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull
-    private  Date orderedDate;
+    private Date orderedDate;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private  Date shippedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date shippedDate;
 
     @NotNull
-    private  String location;
+    private String location;
 
-    @ManyToOne
-    @JoinColumn
-    private Customer customer;
+    @NotNull
+    private Long customerId;
 
-    @ManyToOne
-    @JoinColumn
-    private Item item;
+    @NotNull
+    private Long itemId;
 
 }
