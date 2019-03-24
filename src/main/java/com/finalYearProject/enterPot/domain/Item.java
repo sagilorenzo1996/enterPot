@@ -36,5 +36,11 @@ public class Item implements Serializable {
     @NotNull
     private String models;
 
+    @NotNull
+    private String category;
+
+    @NotNull
+    private String status;
+
 
 }
