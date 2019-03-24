@@ -1,6 +1,5 @@
 package com.finalYearProject.enterPot.controller;
 
-import com.finalYearProject.enterPot.domain.Customer;
 import com.finalYearProject.enterPot.domain.Item;
 import com.finalYearProject.enterPot.repo.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/item")
 public class ItemController {
+
     @Autowired
     ItemRepository itemRepository;
 

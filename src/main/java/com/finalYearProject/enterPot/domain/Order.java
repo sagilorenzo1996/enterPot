@@ -34,7 +34,6 @@ public class Order implements Serializable {
     private String status;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Future
     private Date estimatedDeliveryDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
