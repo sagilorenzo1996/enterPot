@@ -70,4 +70,10 @@ public class ItemController {
         return itemRepository.save(item.get()).getId();
     }
 
+    @CrossOrigin
+    @GetMapping("/all")
+    public Iterable<Item> getAll(){
+        return itemRepository.findAll();
+    }
+
 }

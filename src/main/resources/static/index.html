@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>EnterPot</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    window.basepath = "localhost:8080/";
+  </script>
 </head>
-<body  ng-app="appComponent" ng-controller="appController">
+<body  ng-app="appComponent" ng-controller="appController" ng-init="initApp()">
 <nav class="white" role="navigation">
   <div class="nav-wrapper container">
     <a id="logo-container" href="/" class="brand-logo">
@@ -22,55 +24,182 @@
       EnterPot
     </a>
     <ul class="right hide-on-med-and-down">
-      <li ng-click="goToLogin()" ng-show="showLogin"><a>Login</a></li>
-      <li ng-click="goToAccount()" ng-show="showProfile"><a  href="#">Account</a></li>
+      <li ng-show="showLogin"><a href="/login.html">Login</a></li>
+      <li ng-click="goToRegister()" ng-show="showLogin"><a>Register</a></li>
+      <li ng-click="goToAccount()" ng-show="showProfile"><a>Account</a></li>
     </ul>
 
     <ul id="nav-mobile" class="sidenav">
-      <li><a href="#">Navbar Link</a></li>
+      <li ng-show="showLogin"><a href="/login.html">Login</a></li>
+      <li ng-click="goToRegister()" ng-show="showLogin"><a>Register</a></li>
+      <li ng-click="goToAccount()" ng-show="showProfile"><a>Account</a></li>
     </ul>
     <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
   </div>
 </nav>
-<div ng-view></div>
+<div id="index-banner" class="parallax-container">
+  <div class="section no-pad-bot">
+    <div class="container blue lighten-2">
+      <br><br><br>
+      <h1 class="header center white-text">Welcome</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">High Quality Original Items... Fastest shipping... Order tracking & Much More</h5>
+      </div>
+      <div class="row center">
+        <a href="all.html" id="download-button"
+           class="btn-large waves-effect waves-light white blue-text text-lighten-1">Start Shopping</a>
+      </div>
+      <br><br><br>
 
-<script>
-  const LOGGED_STATUS = "logged";
-  var app = angular.module("appComponent", ["ngRoute"]);
-  app.config(function($routeProvider) {
-    $routeProvider
-      .when("/", {
-        templateUrl : "home.html"
-      })
-      .when("/login", {
-        templateUrl : "login.html"
-      });
-  });
-  app.controller('appController', function($scope) {
-    $scope.isUserLogged = window.sessionStorage.getItem('enterPotUser');
-    $scope.showLogin = true;
-    $scope.showProfile = false;
-    if($scope.isUserLogged){
-      if($scope.isUserLogged.toString() !== ""){
-        $scope.showLogin = false;
-        $scope.showProfile =true;
-        
-      }
-      else {
-        $scope.showLogin = true;
-        $scope.showProfile =false;
-      }
-    }
+    </div>
+  </div>
+  <div class="parallax"><img src="img/home/backgroundOne.jpg"></div>
+</div>
 
-    $scope.goToLogin = function() {
-      $scope.firstname = "Nelly";
-    };
-    $scope.goToAccount = function() {
-      $scope.firstname = "Nelly";
-    };
-  });
-</script>
+
+<div class="container">
+  <div class="section">
+
+    <!--   Icon Section   -->
+    <div class="row">
+      <div class="col s12 m4">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" height="300" width="300" src="img/home/tech.jpg">
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Best Of Tech<i class="material-icons right">more_vert</i></span>
+            <p><a href="/technology.html">Go Shopping</a></p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Technology<i class="material-icons right">close</i></span>
+            <p>Millions of technological articles on your finger tips. Start shopping now. </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col s12 m4">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" height="300" width="300" src="img/home/fashion.jpg">
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Amazing Fashion Trends<i class="material-icons right">more_vert</i></span>
+            <p><a href="/technology.html">Go Shopping</a></p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Technology<i class="material-icons right">close</i></span>
+            <p>Millions of technological articles on your finger tips. Start shopping now. </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col s12 m4">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="img/home/sport.jpg">
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">All Sport Equipments<i class="material-icons right">more_vert</i></span>
+            <p><a href="/technology.html">Go Shopping</a></p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Technology<i class="material-icons right">close</i></span>
+            <p>Millions of technological articles on your finger tips. Start shopping now. </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+  <div class="section no-pad-bot">
+    <div class="container">
+      <div class="row center">
+        <h5 class="header col s12 white-text blue lighten-2" id="home-login-banner">To sign-up click <a href="register.html">here</a></h5>
+      </div>
+    </div>
+  </div>
+  <div class="parallax"><img src="img/home/background2.jpg" alt="Unsplashed background img 2"></div>
+</div>
+
+<div class="container">
+  <div class="section">
+
+    <div class="row">
+      <div class="col s12 center">
+        <h3><i class="mdi-content-send brown-text"></i></h3>
+        <h4>Our Policy</h4>
+        <p class="left-align light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque id nunc
+          nec volutpat. Etiam pellentesque tristique arcu, non consequat magna fermentum ac. Cras ut ultricies eros.
+          Maecenas eros justo, ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, posuere et pretium eget,
+          bibendum sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla imperdiet
+          semper molestie. Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget dignissim
+          mauris, non tristique erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+          Curae;</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="parallax-container valign-wrapper">
+  <div class="section no-pad-bot">
+    <div class="container">
+      <div class="row center">
+        <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+      </div>
+    </div>
+  </div>
+  <div class="parallax"><img src="img/home/background3.jpg" alt="Unsplashed background img 3"></div>
+</div>
+
+<footer class="page-footer teal">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">Company Bio</h5>
+        <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full
+          time job. Any amount would help support and continue development on this project and is greatly
+          appreciated.</p>
+
+
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Settings</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Link 1</a></li>
+          <li><a class="white-text" href="#!">Link 2</a></li>
+          <li><a class="white-text" href="#!">Link 3</a></li>
+          <li><a class="white-text" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Connect</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Link 1</a></li>
+          <li><a class="white-text" href="#!">Link 2</a></li>
+          <li><a class="white-text" href="#!">Link 3</a></li>
+          <li><a class="white-text" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      Made by Aanjalo
+    </div>
+  </div>
+</footer>
 <!--  Scripts-->
+<script src="js/appComponent.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>

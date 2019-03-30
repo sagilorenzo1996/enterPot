@@ -60,3 +60,7 @@ footer.page-footer {
 .brand-logo .material-icons {
   font-size: 45px;
 }
+
+#home-login-banner {
+  padding: 20px;
+}

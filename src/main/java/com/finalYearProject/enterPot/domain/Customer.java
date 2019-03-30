@@ -1,7 +1,6 @@
 package com.finalYearProject.enterPot.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -68,7 +67,6 @@ public class Customer implements Serializable {
     private String country;
 
     @NotNull
-    @Size(min = 1, max = 8)
     private int postalCode;
 
 }
