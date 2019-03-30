@@ -18,7 +18,7 @@ public class ItemController {
     private String AVAILABLE = "available";
     private String UNAVAILABLE = "unavailable";
 
-    @GetMapping("/")
+    @PostMapping("/")
     public Long createItem(@RequestBody Item item){
         return itemRepository.save(item).getId();
     }

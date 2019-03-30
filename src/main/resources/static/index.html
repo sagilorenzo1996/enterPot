@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EnterPot</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body  ng-app="appComponent" ng-controller="appController">
+<nav class="white" role="navigation">
+  <div class="nav-wrapper container">
+    <a id="logo-container" href="/" class="brand-logo">
+      <i class="material-icons" id="logo-icon">
+        loyalty
+      </i>
+      EnterPot
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <li ng-click="goToLogin()" ng-show="showLogin"><a>Login</a></li>
+      <li ng-click="goToAccount()" ng-show="showProfile"><a  href="#">Account</a></li>
+    </ul>
+
+    <ul id="nav-mobile" class="sidenav">
+      <li><a href="#">Navbar Link</a></li>
+    </ul>
+    <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+  </div>
+</nav>
+<div ng-view></div>
+
+<script>
+  const LOGGED_STATUS = "logged";
+  var app = angular.module("appComponent", ["ngRoute"]);
+  app.config(function($routeProvider) {
+    $routeProvider
+      .when("/", {
+        templateUrl : "home.html"
+      })
+      .when("/login", {
+        templateUrl : "login.html"
+      });
+  });
+  app.controller('appController', function($scope) {
+    $scope.isUserLogged = window.sessionStorage.getItem('enterPotUser');
+    $scope.showLogin = true;
+    $scope.showProfile = false;
+    if($scope.isUserLogged){
+      if($scope.isUserLogged.toString() !== ""){
+        $scope.showLogin = false;
+        $scope.showProfile =true;
+        
+      }
+      else {
+        $scope.showLogin = true;
+        $scope.showProfile =false;
+      }
+    }
+
+    $scope.goToLogin = function() {
+      $scope.firstname = "Nelly";
+    };
+    $scope.goToAccount = function() {
+      $scope.firstname = "Nelly";
+    };
+  });
+</script>
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+</body>
+</html>

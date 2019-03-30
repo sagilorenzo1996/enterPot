@@ -8,10 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = "orders")
 
 @Entity
 @Table(name = "Customer")
