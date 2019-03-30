@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @RestController
@@ -74,6 +75,13 @@ public class ItemController {
     @GetMapping("/all")
     public Iterable<Item> getAll(){
         return itemRepository.findAll();
+    }
+
+    @CrossOrigin
+    @GetMapping("/search/{name}")
+    public Iterable<Item> searchByName(@PathVariable String name){
+        Iterable<Item> items= itemRepository.findByNameContaining(name);
+        return items;
     }
 
 }
