@@ -29,6 +29,8 @@ public class OrderController {
     OrderRepository orderRepository;
 
     private String ORDERPLACED = "placed";
+    private String SHIPPED = "shipped";
+    private String DE = "placed";
 
     @CrossOrigin
     @Transactional

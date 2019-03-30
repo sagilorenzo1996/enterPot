@@ -60,7 +60,7 @@ public class ItemController {
     }
 
     @CrossOrigin
-    @PutMapping("/{id}")
+    @PutMapping("/status/{id}")
     public Long updateItemStatus(@PathVariable Long id, @RequestParam String status) throws ResourceNotFoundException{
         Optional<Item> item = itemRepository.findById(id);
         if (!item.isPresent()) {
