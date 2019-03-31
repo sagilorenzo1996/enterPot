@@ -1,57 +1,127 @@
-<!doctype html>
-<html class="no-js" lang="">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Enterpot</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EnterPot</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="css/login.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    window.basepath = "http://localhost:8080/";
+  </script>
 </head>
-<body style="background-image:url(img/199.png); background-repeat: no-repeat;background-size: cover;">
-<div>
-  <h5 class="center-align" style="font-weight:bold; margin-top:180px;">Login Here</h5>
-</div>
-<div class="row">
-  <div class="input-field col s6">
-    <i class="material-icons prefix">mail</i>
-    <input id="email" type="email" class="validate">
-    <label for="email">Email</label>
-  </div>
-</div>
-<div class="row">
-  <div class="input-field col s6">
-    <i class="material-icons prefix">lock</i>
-    <input id="password" type="password" class="validate">
-    <label for="password">Password</label>
-  </div>
-</div>
-<button class="btn waves-effect waves-light col s12" style="float:left;" type="submit" style="width: 110px; height: 40px; float: right; color:white;" name="action">Submit
-  <i class="material-icons right">send</i>
-</button>
-</form>
-<br><br>
+<body ng-app="appComponent" ng-controller="appController" ng-init="initApp()" class="blue lighten-5">
+<nav class="white" role="navigation">
+  <div class="nav-wrapper container">
+    <a id="logo-container" href="/" class="brand-logo">
+      <i class="material-icons" id="logo-icon">
+        loyalty
+      </i>
+      EnterPot
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <li ng-show="showLogin"><a href="/login">Login</a></li>
+      <li ng-click="goToRegister()" ng-show="showLogin"><a href="/register">Register</a></li>
+      <li ng-click="goToAccount()" ng-show="showProfile"><a href="/myAccount">Account</a></li>
+    </ul>
 
+    <ul id="nav-mobile" class="sidenav">
+      <li ng-show="showLogin"><a href="/login">Login</a></li>
+      <li ng-click="goToRegister()" ng-show="showLogin"><a href="/register">Register</a></li>
+      <li ng-click="goToAccount()" ng-show="showProfile"><a href="/myAccount">Account</a></li>
+    </ul>
+    <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+  </div>
+</nav>
+
+<div class="container">
+  <br>
+  <div class="row white">
+    <div class="col s2"></div>
+    <div class="col s8 center-align">
+      <br>
+      <h4>Login</h4>
+      <form name="loginForm" >
+      <div class="row">
+        <div class="input-field col s12 blue-text">
+          <i class="material-icons prefix">mail_outline</i>
+          <input id="email" type="email" name="customerEmail"  ng-model="customerEmail">
+          <label for="email">Email</label>
+          <small class="red-text" ng-show="!loginForm.customerEmail.$valid">Please enter a valid email</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 blue-text">
+          <i class="material-icons prefix">lock_open</i>
+          <input id="password" type="password" name="password" ng-model="customerPassword">
+          <label for="password">Password</label>
+          <small class="red-text" ng-show="customerPassword.length<5 ">Password must have at least 6 characters </small>
+        </div>
+      </div>
+      <div class="row" ng-show="errorMsg">
+        <div class="col s12">
+          <div class="card red white-text ">
+            <p>Your e-mail or password is incorrect. Please try again</p>
+          </div>
+        </div>
+      </div>
+      <div class="row" >
+        <a ng-class="submitBtnDisabled" class="btn-large waves-effect waves-light blue lighten-1" >Login <i class="material-icons right">send</i></a>
+      </div>
+      <br>
+      </form>
+    </div>
+    <div class="col s2"></div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script src="js/vendor/modernizr-3.7.1.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
-<script src="js/plugins.js"></script>
-<script src="js/main.js"></script>
-<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-  window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-  ga('create', 'UA-XXXXX-Y', 'auto'); ga('set','transport','beacon'); ga('send', 'pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+<footer class="page-footer teal" ng-show="items">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">Company Bio</h5>
+        <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full
+          time job. Any amount would help support and continue development on this project and is greatly
+          appreciated.</p>
+
+
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Settings</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Link 1</a></li>
+          <li><a class="white-text" href="#!">Link 2</a></li>
+          <li><a class="white-text" href="#!">Link 3</a></li>
+          <li><a class="white-text" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Connect</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Link 1</a></li>
+          <li><a class="white-text" href="#!">Link 2</a></li>
+          <li><a class="white-text" href="#!">Link 3</a></li>
+          <li><a class="white-text" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      Made by Aanjalo
+    </div>
+  </div>
+</footer>
+<!--  Scripts-->
+<script src="js/itemComponent.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
 </body>
-
 </html>

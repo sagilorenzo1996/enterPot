@@ -3,6 +3,7 @@ package com.finalYearProject.enterPot.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class webController {
@@ -35,6 +36,11 @@ public class webController {
     @GetMapping("/category/{category}")
     public String category(@PathVariable String category) {
         return "category.html";
+    }
+
+    @GetMapping("/cart")
+    public String itemPage(@RequestParam Long id) {
+        return "item.html";
     }
 
 

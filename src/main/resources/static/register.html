@@ -1,10 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EnterPot</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    window.basepath = "http://localhost:8080/";
+  </script>
 </head>
-<body>
+<body ng-app="appComponent" ng-controller="appController" ng-init="initApp()" class="blue lighten-5">
+<nav class="white" role="navigation">
+  <div class="nav-wrapper container">
+    <a id="logo-container" href="/" class="brand-logo">
+      <i class="material-icons" id="logo-icon">
+        loyalty
+      </i>
+      EnterPot
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <li ng-show="showLogin"><a href="/login">Login</a></li>
+      <li ng-click="goToRegister()" ng-show="showLogin"><a href="/register">Register</a></li>
+      <li ng-click="goToAccount()" ng-show="showProfile"><a href="/myAccount">Account</a></li>
+    </ul>
+
+    <ul id="nav-mobile" class="sidenav">
+      <li ng-show="showLogin"><a href="/login">Login</a></li>
+      <li ng-click="goToRegister()" ng-show="showLogin"><a href="/register">Register</a></li>
+      <li ng-click="goToAccount()" ng-show="showProfile"><a href="/myAccount">Account</a></li>
+    </ul>
+    <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+  </div>
+</nav>
+
+<div class="container">
+  <br>
+  ddd
+</div>
+
+
+<footer class="page-footer teal" ng-show="items">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">Company Bio</h5>
+        <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full
+          time job. Any amount would help support and continue development on this project and is greatly
+          appreciated.</p>
+
+
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Settings</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Link 1</a></li>
+          <li><a class="white-text" href="#!">Link 2</a></li>
+          <li><a class="white-text" href="#!">Link 3</a></li>
+          <li><a class="white-text" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Connect</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Link 1</a></li>
+          <li><a class="white-text" href="#!">Link 2</a></li>
+          <li><a class="white-text" href="#!">Link 3</a></li>
+          <li><a class="white-text" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      Made by Aanjalo
+    </div>
+  </div>
+</footer>
+<!--  Scripts-->
+<script src="js/regsiterComponent.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
 
 </body>
 </html>
