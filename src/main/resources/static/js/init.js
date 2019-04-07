@@ -8,6 +8,7 @@
     $('.tooltipped').tooltip();
     $('.datepicker').datepicker();
     $('select').formSelect();
+    $('.modal').modal();
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space
