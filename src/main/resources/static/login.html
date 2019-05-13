@@ -4,13 +4,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>EnterPot</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <script>
+    $("#errorPanel").hide();
     window.basepath = "http://localhost:8080/";
   </script>
 </head>
@@ -45,35 +45,68 @@
     <div class="col s8 center-align">
       <br>
       <h4>Login</h4>
-      <form name="loginForm" >
       <div class="row">
         <div class="input-field col s12 blue-text">
           <i class="material-icons prefix">mail_outline</i>
-          <input id="email" type="email" name="customerEmail"  ng-model="customerEmail">
+          <input id="email" type="email" name="customerEmail" >
           <label for="email">Email</label>
-          <small class="red-text" ng-show="!loginForm.customerEmail.$valid">Please enter a valid email</small>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12 blue-text">
           <i class="material-icons prefix">lock_open</i>
-          <input id="password" type="password" name="password" ng-model="customerPassword">
+          <input id="password" type="password" name="password">
           <label for="password">Password</label>
-          <small class="red-text" ng-show="customerPassword.length<5 ">Password must have at least 6 characters </small>
         </div>
       </div>
-      <div class="row" ng-show="errorMsg">
-        <div class="col s12">
-          <div class="card red white-text ">
-            <p>Your e-mail or password is incorrect. Please try again</p>
+        <div class="row" id="errorPanel">
+          <div class="col s12"  >
+            <div class="card-panel white">
+              <span class="red-text" id="errorText" ></span>
+            </div>
           </div>
         </div>
-      </div>
       <div class="row" >
-        <a ng-class="submitBtnDisabled" class="btn-large waves-effect waves-light blue lighten-1" >Login <i class="material-icons right">send</i></a>
+        <button class="btn-large waves-effect waves-light blue lighten-1" onclick="login()">Login <i class="material-icons right">send</i></button>
       </div>
       <br>
-      </form>
+        <script>
+
+
+
+
+          function login() {
+            var login={
+              "email": $("#email").val(),
+              "passoword": $("#password").val()
+            };
+
+            console.log(login);
+            $.ajax({
+              'type': 'POST',
+              'url': 'http://localhost:8080/customer/login/',
+              'contentType': 'application/json',
+              'data': JSON.stringify(login),
+              'dataType': 'json',
+              'success': function (data) {
+                $("#errorPanel").hide();
+                if(data==-1){
+                  $("#errorPanel").show();
+                  $("#errorText").html("Incorrect Password");
+                }
+                else{
+                  location.href="/myAccount"
+                }
+                console.log(data);
+              },
+              'error': function (data) {
+                $("#errorPanel").show();
+                $("#errorText").html(data.responseJSON.message);
+                console.log(data.responseJSON.message);
+              }
+            });
+          }
+        </script>
     </div>
     <div class="col s2"></div>
   </div>
@@ -118,7 +151,7 @@
   </div>
 </footer>
 <!--  Scripts-->
-<script src="js/itemComponent.js"></script>
+<!--<script src="js/itemComponent.js"></script>-->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
