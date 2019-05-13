@@ -43,6 +43,11 @@ public class webController {
         return "item.html";
     }
 
+    @GetMapping("/location")
+    public String orderPage(@RequestParam Long id) {
+        return "location.html";
+    }
+
 
 
 //    @GetMapping("/listing")

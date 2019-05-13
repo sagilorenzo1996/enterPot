@@ -12,6 +12,47 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <script>
     window.basepath = "http://localhost:8080/";
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    var xmlhttp;
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest();
+    } else {
+      // code for older browsers
+      xmlhttp = new ActiveXObject();
+    }
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // document.getElementById("demo").innerHTML =
+        //   this.responseText;
+        const jsonResponse = JSON.parse(this.responseText);
+        window.itemId = jsonResponse.id
+        console.log(jsonResponse.image);
+        document.getElementById('imagePic').src = jsonResponse.image;
+        document.getElementById('heading').innerText = jsonResponse.name;
+        document.getElementById('price').innerText = "Rs"+jsonResponse.price;
+        document.getElementById('des').innerText = jsonResponse.description;
+        document.getElementById('imagePic').src = jsonResponse.image;
+      }
+    };
+    xmlhttp.open("GET", window.basepath+"item/"+id, true);
+    xmlhttp.send();
+
+
+    function orderItem() {
+      var url = window.basepath+'order/?customer=1&item='+window.itemId+'&quantity=1';
+      var req = new XMLHttpRequest();
+      req.overrideMimeType("application/json");
+      req.open('POST', url, true);
+      req.onreadystatechange  = function() {
+        var res = JSON.parse(req.responseText);
+        console.log(res);
+        document.getElementById('orderSuccess').style.display = "block";
+        // do something with jsonResponse
+      };
+      req.send();
+      console.log("sddsdd");
+    }
   </script>
 </head>
 <body ng-app="appComponent" ng-controller="appController" ng-init="initApp()" class="blue lighten-5">
@@ -43,10 +84,10 @@
     <div class="col s10 l8 m8">
       <div class="row">
         <div class="col s12 m6 l6">
-          <img src="img/item/1.jpg" class="responsive-img" style="margin-left: -100px;">
+          <img class="responsive-img" style="margin-left: -100px;" id="imagePic">
         </div>
         <div class="col l6 m6 s12">
-          <h4>Dell Xps Laptop i7</h4>
+          <h4 id="heading"></h4>
           <ul class="collection">
             <li class="collection-item">Model: 1856893D386</li>
             <li class="collection-item">Items sold: 202 <i class="material-icons right">
@@ -55,7 +96,7 @@
             <li class="collection-item">Status: Available<i class="material-icons right">
               done
             </i></li>
-            <li class="collection-item">Description: 2018 Dell xps laptop 512 SSD 512 HDD, 16GB Ram, Internal VGA</li>
+            <li class="collection-item" >Description: <span id="des"></span></li>
           </ul>
         </div>
       </div>
@@ -75,10 +116,18 @@
         </div>
         <div class="col s12">
           <div class="row">
-            <h5 class="col s6">Rs 175,000.00 x 1</h5>
-            <div class="col s6 center-align"><button class="btn btn large waves-effect">Buy Now<i class="material-icons right">
+            <h5 class="col s6" id="price">Rs 175,000.00 x 1</h5>
+            <div class="col s6 center-align"><button class="btn btn large waves-effect" onclick="orderItem()">Buy Now<i class="material-icons right">
               shopping_cart
             </i></button> </div>
+          </div>
+        </div>
+        <div class="row" >
+          <div class="col s12">
+            <div class="card-panel green" style="display: none;" id="orderSuccess">
+            <span class="white-text">Order placed successfully
+            </span>
+            </div>
           </div>
         </div>
       </div>

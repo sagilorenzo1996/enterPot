@@ -1,10 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EnterPot</title>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    window.basepath = "http://localhost:8080/";
+    var xmlhttp;
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest();
+    } else {
+      // code for older browsers
+      xmlhttp = new ActiveXObject();
+    }
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // document.getElementById("demo").innerHTML =
+        //   this.responseText;
+        const jsonResponse = JSON.parse(this.responseText);
+        for(var i = 0;i<jsonResponse.length;i++){
+          document.getElementById('ordertable').innerHTML +="<tr>\n" +
+            "            <td>"+jsonResponse[i].id+"</td>\n" +
+            "            <td>"+jsonResponse[i].itemId+"</td>\n" +
+            "            <td>"+jsonResponse[i].total+"</td>\n" +
+            "            <td>"+jsonResponse[i].location+"</td>\n" +
+            "            <td>"+jsonResponse[i].status+"</td>\n" +
+            "            <td><a href='/location?id="+jsonResponse[i].id+"'><i class=\"material-icons\" >\n" +
+            "        send\n" +
+            "      </i></a></td>\n" +
+            "          </tr>";
+        }
+
+        console.log(jsonResponse);
+      }
+    };
+    xmlhttp.open("GET", window.basepath+"order/customer?customer=1", true);
+    xmlhttp.send();
+
+  </script>
 </head>
-<body>
+<body ng-app="appComponent" ng-controller="appController" ng-init="initApp()" class="blue lighten-5">
+<nav class="white" role="navigation">
+  <div class="nav-wrapper container">
+    <a id="logo-container" href="/" class="brand-logo">
+      <i class="material-icons" id="logo-icon">
+        loyalty
+      </i>
+      EnterPot
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <!--<li ><a href="/myAccount">Account</a></li>-->
+    </ul>
+
+    <ul id="nav-mobile" class="sidenav">
+      <!--<li><a href="/login">Login</a></li>-->
+      <!--<li><a href="/register">Register</a></li>-->
+      <!--<li><a href="/myAccount">Account</a></li>-->
+    </ul>
+    <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+  </div>
+</nav>
+
+<div class="container">
+  <br>
+  <div class="row white">
+    <div class="col l2 m2 s1"></div>
+    <div class="col s10 l8 m8">
+      <div class="row">
+        <table>
+          <thead>
+          <tr>
+            <th>Order Reference</th>
+            <th>Item Reference</th>
+            <th>Total</th>
+            <th>To</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+          </thead>
+
+          <tbody id="ordertable">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col l2 m2 s1"></div>
+  </div>
+</div>
+
+
+<footer class="page-footer teal">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">Company Bio</h5>
+        <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full
+          time job. Any amount would help support and continue development on this project and is greatly
+          appreciated.</p>
+
+
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Settings</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Link 1</a></li>
+          <li><a class="white-text" href="#!">Link 2</a></li>
+          <li><a class="white-text" href="#!">Link 3</a></li>
+          <li><a class="white-text" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Connect</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Link 1</a></li>
+          <li><a class="white-text" href="#!">Link 2</a></li>
+          <li><a class="white-text" href="#!">Link 3</a></li>
+          <li><a class="white-text" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      Made by Aanjalo
+    </div>
+  </div>
+</footer>
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
 
 </body>
 </html>

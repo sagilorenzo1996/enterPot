@@ -35,18 +35,18 @@ public class OrderController {
     @CrossOrigin
     @Transactional
     @PostMapping("/")
-    public Long createOrder(@RequestParam Long customer, @RequestParam Long item, @RequestParam int quantity, @RequestBody BigDecimal total)throws ResourceNotFoundException {
+    public Long createOrder(@RequestParam Long customer, @RequestParam Long item, @RequestParam int quantity)throws ResourceNotFoundException {
         Optional<Customer> customer1= customerRepository.findById(customer);
         Optional<Item> item1= itemRepository.findById(item);
         if(!customer1.isPresent() || !item1.isPresent()){
             throw new ResourceNotFoundException("Can't Process Order");
         }
         Order order = new Order();
-        if(quantity>0 && total.signum()>0){
+        if(quantity>0){
             order.setCustomerId(customer1.get().getId());
             order.setItemId(item1.get().getId());
             order.setQuantity(quantity);
-            order.setTotal(total);
+            order.setTotal(item1.get().getPrice());
             order.setLocation(customer1.get().getAddressLineOne()+","+customer1.get().getAddressLineTwo()+","+customer1.get().getCity()+","+customer1.get().getCountry()+","+customer1.get().getPostalCode());
             order.setOrderedDate(new Date());
             order.setShippingMode("ship");
@@ -54,4 +54,21 @@ public class OrderController {
         }
         return orderRepository.save(order).getId();
     }
+
+    @GetMapping("/customer")
+    public Iterable<Order>  getOrdersOfCustomer(@RequestParam Long customer){
+        return orderRepository.findAllByCustomerId(customer);
+    }
+
+    @GetMapping("/item")
+    public Optional<Item>  getItemFromOrder(@RequestParam Long order){
+        Optional<Order> order1 = orderRepository.findById(order);
+        return itemRepository.findById(order1.get().getItemId());
+    }
+
+    @GetMapping("/get")
+    public Optional<Order>  getOrder(@RequestParam Long order){
+        return orderRepository.findById(order);
+    }
+
 }

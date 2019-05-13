@@ -1,6 +1,7 @@
 const LOGGED_STATUS = "logged";
 const baseUrl = window.basepath;
 var app = angular.module("appComponent", []);
+
 app.controller('appController', function($scope, $http) {
   $scope.isUserLogged = sessionStorage.getItem('enterPotUser');
   $scope.showLogin = true;

@@ -19,7 +19,7 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 1, max = 10)
+    @NotNull
     private int quantity;
 
     @Column(precision = 10, scale = 2)
@@ -51,5 +51,13 @@ public class Order implements Serializable {
 
     @NotNull
     private Long itemId;
+
+    private String country;
+
+    private Float lat;
+
+    private Float lng;
+
+
 
 }

@@ -4,7 +4,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>EnterPot</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
@@ -14,7 +13,7 @@
     window.basepath = "http://localhost:8080/";
   </script>
 </head>
-<body ng-app="appComponent" ng-controller="appController" ng-init="initApp()" class="blue lighten-5">
+<body class="blue lighten-5">
 <nav class="white" role="navigation">
   <div class="nav-wrapper container">
     <a id="logo-container" href="/" class="brand-logo">
@@ -23,19 +22,67 @@
       </i>
       EnterPot
     </a>
-    <ul class="right hide-on-med-and-down">
-      <li ng-click="goToAccount()" ><a href="/myAccount">Account</a></li>
-    </ul>
+    <!--<ul class="right hide-on-med-and-down">-->
+      <!--<li ng-click="goToAccount()" ><a href="/myAccount">Account</a></li>-->
+    <!--</ul>-->
 
-    <ul id="nav-mobile" class="sidenav">
-      <li ng-show="showLogin"><a href="/login">Login</a></li>
-      <li ng-click="goToRegister()" ng-show="showLogin"><a href="/register">Register</a></li>
-      <li ng-click="goToAccount()" ng-show="showProfile"><a href="/myAccount">Account</a></li>
-    </ul>
+    <!--<ul id="nav-mobile" class="sidenav">-->
+      <!--<li ng-show="showLogin"><a href="/login">Login</a></li>-->
+      <!--<li ng-click="goToRegister()" ng-show="showLogin"><a href="/register">Register</a></li>-->
+      <!--<li ng-click="goToAccount()" ng-show="showProfile"><a href="/myAccount">Account</a></li>-->
+    <!--</ul>-->
     <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
   </div>
 </nav>
+<script>
+  window.basepath = "http://localhost:8080/";
+  var xmlhttp;
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    // code for older browsers
+    xmlhttp = new ActiveXObject();
+  }
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      const jsonResponse = JSON.parse(this.responseText);
+      document.getElementById('itmName').innerText = jsonResponse.name;
+      console.log(jsonResponse);
+    }
+  };
+  xmlhttp.open("GET", window.basepath+"order/item?order="+id, true);
+  xmlhttp.send();
 
+  var res;
+  var url = window.basepath+'order/get?order='+id;
+  var req = new XMLHttpRequest();
+  req.overrideMimeType("application/json");
+  req.open('GET', url, true);
+  req.onreadystatechange  = function() {
+    res = JSON.parse(req.responseText);
+    document.getElementById('shipdate').innerText=res.orderedDate;
+    document.getElementById('shipStatus').innerText=res.status;
+    document.getElementById('total').innerText=res.total;
+    document.getElementById('coun').innerText=res.country;
+    console.log(res);
+    window.country = res.country;
+    initMap();
+    // do something with jsonResponse
+  };
+  req.send();
+
+  var map;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: res.lat, lng: res.lng},
+      zoom: 10
+    });
+  }
+
+</script>
 <div class="container" style="min-height: 600px;">
   <br>
   <div class="row">
@@ -44,11 +91,10 @@
         <div class="col s12 ">
           <div class="card light-blue darken-3">
             <div class="card-content white-text">
-              <span class="card-title">Dell Xps Laptop</span>
-              <div>Shipped Date: 03-04-2019</div>
-              <div>Approximated Arrival Date: 20-04-2019</div>
-              <div>Status: Confirmed and shipped</div>
-              <div>Price: Rs. 168000.00</div>
+              <span class="card-title" id="itmName"></span>
+              <div>Shipped Date: <span id="shipdate"></span></div>
+              <div>Status: <span id="shipStatus"></span></div>
+              <div>Price: Rs. <span id="total"></span></div>
             </div>
             <div class="card-action">
               <a href="#modal1" class="white-text modal-trigger"><i class="material-icons left">
@@ -65,16 +111,7 @@
   <div class="modal-content">
     <h4>Location</h4>
     <div id="map" style="height: 300px;width: 100%;"></div>
-    <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 1.3521, lng: 103.8198},
-          zoom: 10
-        });
-      }
-    </script>
-    <div>Your package is currently in singapore</div>
+    <div>Your package is currently in <span id="coun"></span></div>
   </div>
 
   <div class="modal-footer">
@@ -121,8 +158,7 @@
 </footer>
 <!--  Scripts-->
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFcskF70l_CDq0_DMYczATK-Jz8K49Abk&callback=initMap" async defer></script>
-<script src="js/itemComponent.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFcskF70l_CDq0_DMYczATK-Jz8K49Abk" async defer></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
